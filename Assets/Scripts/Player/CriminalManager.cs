@@ -25,4 +25,9 @@ public class CriminalManager : MonoBehaviour
     {
         return CriminalLine.Last.Value;
     }
+
+    public GameObject FirstCriminalAtCriminalLine()
+    {
+        return CriminalLine.First.Value;
+    }
 }

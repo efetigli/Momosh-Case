@@ -11,6 +11,8 @@ public class JailStation : MonoBehaviour
     [SerializeField] Transform JailLinePointTransform;
     [SerializeField] Transform TruckPointTransform;
 
+    [SerializeField] Transform PlayerTransform;
+
     public LinkedList<GameObject> CriminalJailLine;
 
     [SerializeField] float WaitTimeAtJail;
@@ -36,12 +38,16 @@ public class JailStation : MonoBehaviour
 
             for(int i = 0; i < howManyCriminal; i++)
             {
-                CriminalJailLine.AddFirst(CriminalManager.LastCriminalAtCriminalLine());
+                CriminalJailLine.AddLast(CriminalManager.FirstCriminalAtCriminalLine());
 
-                CriminalManager.CriminalLine.RemoveLast();
+                CriminalManager.CriminalLine.RemoveFirst();
                 //HandcuffsManager.AddHandcuff(1);
                 //HandcuffStack.AddHandcuffToStack();
             }
+
+
+            if (CriminalManager.CriminalLine.Count != 0)
+                CriminalManager.CriminalLine.First.Value.GetComponent<FollowTarget>().TargetTransform = PlayerTransform;
 
             StartCoroutine(GetOnTruck());
             CriminalJailLine.First.Value.GetComponent<FollowTarget>().TargetTransform = JailLinePointTransform;

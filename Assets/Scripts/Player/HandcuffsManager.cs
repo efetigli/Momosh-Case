@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HandcuffsManager : MonoBehaviour
 {
+    // "numberOfHandcuffs" shows how many arrest can player make.
     [SerializeField] private int numberOfHandcuffs;
 
     public void AddHandcuff(int value)

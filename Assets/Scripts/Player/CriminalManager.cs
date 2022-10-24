@@ -4,30 +4,46 @@ using UnityEngine;
 
 public class CriminalManager : MonoBehaviour
 {
-    [SerializeField] public LinkedList<GameObject> CriminalLine;
+    LinkedList<GameObject> CriminalList; // CriminalList represents criminals, which follows player, captured by player.
 
     private void Awake()
     {
-        CriminalLine = new LinkedList<GameObject>();
+        // Initialize CriminalList
+        CriminalList = new LinkedList<GameObject>();
     }
 
-    public void AddCriminalToCriminalLine(GameObject criminal)
+    public void AddLastCriminalList(GameObject criminal)
     {
-        CriminalLine.AddLast(criminal);
+        CriminalList.AddLast(criminal);
     }
 
-    public void RemoveCriminalToCriminalLine()
+    public void RemoveLastCriminalList()
     {
-        CriminalLine.RemoveLast();
+        CriminalList.RemoveLast();
     }
 
-    public GameObject LastCriminalAtCriminalLine()
+    public void RemoveFirstCriminalList()
     {
-        return CriminalLine.Last.Value;
+        CriminalList.RemoveFirst();
     }
 
-    public GameObject FirstCriminalAtCriminalLine()
+    public GameObject LastCriminalList()
     {
-        return CriminalLine.First.Value;
+        return CriminalList.Last.Value;
+    }
+
+    public GameObject FirstCriminalList()
+    {
+        return CriminalList.First.Value;
+    }
+
+    public int CountCriminalList()
+    {
+        return CriminalList.Count;
+    }
+
+    public bool ContainsCriminalList(GameObject ob)
+    {
+        return CriminalList.Contains(ob);
     }
 }

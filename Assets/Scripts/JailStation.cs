@@ -4,72 +4,80 @@ using UnityEngine;
 
 public class JailStation : MonoBehaviour
 {
+    [Header("Needed Scripts")]
     [SerializeField] HandcuffsManager HandcuffsManager;
     [SerializeField] CriminalManager CriminalManager;
     [SerializeField] HandcuffStack HandcuffStack;
 
+    [Header("Tracked Points")]
     [SerializeField] Transform JailLinePointTransform;
     [SerializeField] Transform TruckPointTransform;
-
     [SerializeField] Transform PlayerTransform;
 
-    public LinkedList<GameObject> CriminalJailLine;
+    private LinkedList<GameObject> CriminalJailList; // CriminalJailLine represents criminals send to jail. (Those criminals are independent from player)
 
-    [SerializeField] float WaitTimeAtJail;
+    [Header("Jail Property")]
+    [SerializeField] float WaitTimeAtJail; // Time will first criminal will spend time in jail.
+    [SerializeField] int maxNumberOfCriminalInJail;
 
     private void Awake()
     {
-        CriminalJailLine = new LinkedList<GameObject>();
+        // Initialize CriminalJailLine
+        CriminalJailList = new LinkedList<GameObject>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (CriminalManager.CriminalLine.Count == 0)
+        // If there is no criminal follows player then return
+        if (CriminalManager.CountCriminalList() == 0)
             return;
 
-        if (CriminalJailLine.Count != 0)
+        // If there is already crimal in jail then return
+        if (CriminalJailList.Count != 0)
             return;
 
         if (other.gameObject.CompareTag("Player"))
         {
-            int howManyCriminal = 3;
-            if (CriminalManager.CriminalLine.Count < 3)
-                howManyCriminal = CriminalManager.CriminalLine.Count;
+            // Detect how many criminal will send to jail. 
+            int howManyCriminal = maxNumberOfCriminalInJail;
+            if (CriminalManager.CountCriminalList() < maxNumberOfCriminalInJail)
+                howManyCriminal = CriminalManager.CountCriminalList();
 
             for(int i = 0; i < howManyCriminal; i++)
             {
-                CriminalJailLine.AddLast(CriminalManager.FirstCriminalAtCriminalLine());
-
-                CriminalManager.CriminalLine.RemoveFirst();
-                //HandcuffsManager.AddHandcuff(1);
-                //HandcuffStack.AddHandcuffToStack();
+                // Add criminal to CriminalJailList and remove CriminalList.
+                CriminalJailList.AddLast(CriminalManager.FirstCriminalList());
+                CriminalManager.RemoveFirstCriminalList();
             }
 
+            // If there is at least one criminal left, then head of criminals follows the player.
+            if (CriminalManager.CountCriminalList() != 0)
+                CriminalManager.FirstCriminalList().GetComponent<FollowTarget>().TargetTransform = PlayerTransform;
 
-            if (CriminalManager.CriminalLine.Count != 0)
-                CriminalManager.CriminalLine.First.Value.GetComponent<FollowTarget>().TargetTransform = PlayerTransform;
-
+            // Start sending criminals from jail to truck.
             StartCoroutine(GetOnTruck());
-            CriminalJailLine.First.Value.GetComponent<FollowTarget>().TargetTransform = JailLinePointTransform;
-            CriminalJailLine.First.Value.GetComponent<FollowTarget>().navAgent.stoppingDistance = 0;
+            CriminalJailList.First.Value.GetComponent<FollowTarget>().TargetTransform = JailLinePointTransform;
+            CriminalJailList.First.Value.GetComponent<FollowTarget>().navAgent.stoppingDistance = 0;
         }
     }
 
+    // Sending criminals from jail to truck.
     private IEnumerator GetOnTruck()
     {
 
         yield return new WaitForSeconds(WaitTimeAtJail);
 
+        // Add hancuff to the player.
         HandcuffsManager.AddHandcuff(1);
         HandcuffStack.AddHandcuffToStack();
 
-        CriminalJailLine.First.Value.GetComponent<FollowTarget>().TargetTransform = TruckPointTransform;
-        CriminalJailLine.RemoveFirst();
+        CriminalJailList.First.Value.GetComponent<FollowTarget>().TargetTransform = TruckPointTransform;
+        CriminalJailList.RemoveFirst();
 
-        if (CriminalJailLine.Count != 0)
+        if (CriminalJailList.Count != 0)
         {
-            CriminalJailLine.First.Value.GetComponent<FollowTarget>().TargetTransform = JailLinePointTransform;
-            CriminalJailLine.First.Value.GetComponent<FollowTarget>().navAgent.stoppingDistance = 0;
+            CriminalJailList.First.Value.GetComponent<FollowTarget>().TargetTransform = JailLinePointTransform;
+            CriminalJailList.First.Value.GetComponent<FollowTarget>().navAgent.stoppingDistance = 0;
             StartCoroutine(GetOnTruck());
         }
     }

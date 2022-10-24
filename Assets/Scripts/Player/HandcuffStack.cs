@@ -4,20 +4,24 @@ using UnityEngine;
 
 public class HandcuffStack : MonoBehaviour
 {
-    [SerializeField] GameObject Handcuff;
-    [SerializeField] Transform HandcuffStackTransform;
+    [Header("Handcuff Property")]
+    [SerializeField] GameObject Handcuff; // Handcuff prefab
+    [SerializeField] Transform HandcuffStackTransform; // Handcuff stacking position
     [SerializeField] HandcuffsManager HandcuffsManager;
+    private LinkedList<GameObject> HandcuffList;
 
-    [SerializeField] float distanceBetweenTwoHandcuffs;
-    [SerializeField] private Vector3 NewHandcuffPosition;
+    [Header("Handcuff Stack Position Property")]
+    [SerializeField] private float distanceBetweenTwoHandcuffs; // Stacking vertical distance between two handcuffs
+    private Vector3 NewHandcuffPosition; // Next handcuff's position in handcuff stack
 
-    [SerializeField] private LinkedList<GameObject> HandcuffList;
 
     private void Awake()
     {
+        // Initialize HandcuffList 
         HandcuffList = new LinkedList<GameObject>();
 
-        for(int i = 0; i < HandcuffsManager.GetNumberOfHandcuffs(); i++)
+        // Create initial Handcuffs in handcuff stack
+        for (int i = 0; i < HandcuffsManager.GetNumberOfHandcuffs(); i++)
         {
             InitialAddHandcuffToStack();
         }
@@ -33,6 +37,7 @@ public class HandcuffStack : MonoBehaviour
         return created;
     }
 
+    // Just use when initializing HandcuffList
     public void InitialAddHandcuffToStack()
     {
         GameObject temp = CreateHandcuff();

@@ -17,31 +17,38 @@ public class CaptureCriminalByPlayer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Criminal") && !CriminalManager.CriminalLine.Contains(other.gameObject) && other.gameObject.GetComponent<FollowTarget>().captured == false)
+        // If criminal already follows player.
+        //if (CriminalManager.ContainsCriminalList(other.gameObject))
+        //    return;
+
+
+        if (other.gameObject.CompareTag("Criminal"))
         {
+            // If criminal already captured return.
+            if (other.gameObject.GetComponent<FollowTarget>().captured == true)
+                return;
+
+            // Check is there enough handcuff at the stack of the player.
             if (HandcuffsManager.GetNumberOfHandcuffs() > 0)
             {
                 CaptureCriminal(other.gameObject);
             }
-            else
-                Debug.Log("Out of Handcuffs");
         }
-        else if(CriminalManager.CriminalLine.Contains(other.gameObject))
-            Debug.Log("Already captured this criminal");
     }
 
     private void CaptureCriminal(GameObject ob)
     {
-        if (CriminalManager.CriminalLine.Count == 0)
+        // If there is no captured criminal, then first captured criminal is going to follow player.
+        if (CriminalManager.CountCriminalList() == 0)
             ob.GetComponent<FollowTarget>().TargetTransform = this.transform;
+        // If already captured criminal, then first captured criminal is going to follow tail criminal.
         else
-            ob.GetComponent<FollowTarget>().TargetTransform = CriminalManager.CriminalLine.Last.Value.transform;
+            ob.GetComponent<FollowTarget>().TargetTransform = CriminalManager.LastCriminalList().transform;
 
-        CriminalManager.AddCriminalToCriminalLine(ob);
+        CriminalManager.AddLastCriminalList(ob);
         HandcuffsManager.RemoveHandcuff(1);
         HandcuffStack.RemoveHandcuffToStack();
         ob.GetComponent<FollowTarget>().captured = true;
-
     }
 
 }

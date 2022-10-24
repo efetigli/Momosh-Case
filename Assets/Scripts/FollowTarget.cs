@@ -6,7 +6,9 @@ using UnityEngine.AI;
 public class FollowTarget : MonoBehaviour
 {
     public Transform TargetTransform = null;
-    NavMeshAgent navAgent;
+    public NavMeshAgent navAgent;
+
+    public bool captured = false;
 
     private void Start()
     {

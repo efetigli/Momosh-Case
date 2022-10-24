@@ -4,37 +4,36 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    private PlayerControls playerControls;
-    PlayerControls.GameplayActions gameplay;
+    private PlayerControls PlayerControls;
+    PlayerControls.GameplayActions Gameplay;
 
-    [HideInInspector] public Vector2 movement;
+    public Vector2 movement { get; private set; }
 
     private void Awake()
     {
-        playerControls = new PlayerControls();
-        gameplay = playerControls.Gameplay;
+        PlayerControls = new PlayerControls();
+        Gameplay = PlayerControls.Gameplay;
     }
 
     private void Update()
     {
         MovementInput();
-        Debug.Log(movement);
     }
 
     #region Enable and Disable Player Controls
     private void OnEnable()
     {
-        playerControls.Enable();
+        PlayerControls.Enable();
     }
 
     private void OnDisable()
     {
-        playerControls.Disable();
+        PlayerControls.Disable();
     }
     #endregion
 
     public void MovementInput()
     {
-        movement = gameplay.Move.ReadValue<Vector2>();
+        movement = Gameplay.Move.ReadValue<Vector2>();
     }
 }

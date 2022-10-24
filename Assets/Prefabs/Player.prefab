@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9dc749ac6bfc8940a0438c11b4bf1a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfHandcuffs: 3
+  numberOfHandcuffs: 5
 --- !u!114 &272526663
 MonoBehaviour:
   m_ObjectHideFlags: 0

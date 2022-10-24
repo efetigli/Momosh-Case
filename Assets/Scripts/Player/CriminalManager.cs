@@ -15,4 +15,14 @@ public class CriminalManager : MonoBehaviour
     {
         CriminalLine.AddLast(criminal);
     }
+
+    public void RemoveCriminalToCriminalLine()
+    {
+        CriminalLine.RemoveLast();
+    }
+
+    public GameObject LastCriminalAtCriminalLine()
+    {
+        return CriminalLine.Last.Value;
+    }
 }

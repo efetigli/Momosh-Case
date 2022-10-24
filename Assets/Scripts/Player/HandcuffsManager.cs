@@ -11,6 +11,11 @@ public class HandcuffsManager : MonoBehaviour
         numberOfHandcuffs += value;
     }
 
+    public void RemoveHandcuff(int value)
+    {
+        numberOfHandcuffs -= value;
+    }
+
     public int GetNumberOfHandcuffs()
     {
         return numberOfHandcuffs;

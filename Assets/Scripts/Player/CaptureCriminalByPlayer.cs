@@ -17,7 +17,7 @@ public class CaptureCriminalByPlayer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Criminal") && !CriminalManager.CriminalLine.Contains(other.gameObject))
+        if (other.gameObject.CompareTag("Criminal") && !CriminalManager.CriminalLine.Contains(other.gameObject) && other.gameObject.GetComponent<FollowTarget>().captured == false)
         {
             if (HandcuffsManager.GetNumberOfHandcuffs() > 0)
             {
@@ -40,6 +40,7 @@ public class CaptureCriminalByPlayer : MonoBehaviour
         CriminalManager.AddCriminalToCriminalLine(ob);
         HandcuffsManager.RemoveHandcuff(1);
         HandcuffStack.RemoveHandcuffToStack();
+        ob.GetComponent<FollowTarget>().captured = true;
 
     }
 

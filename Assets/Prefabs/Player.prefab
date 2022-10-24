@@ -176,6 +176,8 @@ GameObject:
   - component: {fileID: 1672886489352444898}
   - component: {fileID: 1672886489352444899}
   - component: {fileID: 272526662}
+  - component: {fileID: 272526663}
+  - component: {fileID: 272526664}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -289,6 +291,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfHandcuffs: 3
+--- !u!114 &272526663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672886489352444902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e546a987f70cb8f4080432e55d755abf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &272526664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672886489352444902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fc832c432d89f44d8f8475c27205488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HandcuffStack: {fileID: 1813661275}
 --- !u!1 &1672886489497978154
 GameObject:
   m_ObjectHideFlags: 0

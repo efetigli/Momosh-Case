@@ -32,7 +32,7 @@ public class HandcuffResourceStation : MonoBehaviour
         if (timer <= 0f)
         {
             HandcuffsManager.AddHandcuff(1);
-            HandcuffStack.AddHandcuffToStack();
+            HandcuffStack.AddHandcuffToStack(this.transform.position);
             timer = CountDownTime;
         }
     }

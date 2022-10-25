@@ -69,7 +69,7 @@ public class JailStation : MonoBehaviour
 
         // Add hancuff to the player.
         HandcuffsManager.AddHandcuff(1);
-        HandcuffStack.AddHandcuffToStack();
+        HandcuffStack.AddHandcuffToStack(this.transform.position);
 
         CriminalJailList.First.Value.GetComponent<FollowTarget>().TargetTransform = TruckPointTransform;
         CriminalJailList.RemoveFirst();
@@ -80,5 +80,15 @@ public class JailStation : MonoBehaviour
             CriminalJailList.First.Value.GetComponent<FollowTarget>().navAgent.stoppingDistance = 0;
             StartCoroutine(GetOnTruck());
         }
+    }
+
+    private void PrintLinkedList(LinkedList<GameObject> ll)
+    {
+        string output = "";
+        foreach (GameObject ob in ll)
+        {
+            output += ob.name + " ";
+        }
+        Debug.Log(output);
     }
 }

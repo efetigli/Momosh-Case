@@ -13,10 +13,12 @@ public class HandcuffAnimation : MonoBehaviour
     public float curveAngle;
 
     private GameObject HandcuffStack;
+    public GameObject WhichCriminal;
 
     void Start()
     {
         this.transform.position = StartPosition;
+        WhichCriminal = null;
 
         HandcuffStack = GameObject.Find("/Player/Body/Handcuff Stack");
 
@@ -41,8 +43,15 @@ public class HandcuffAnimation : MonoBehaviour
 
     private void ParaboleMovement()
     {
+        if (!IsStartMoving)
+        {
+            WhichCriminal = HandcuffStack.GetComponent<HandcuffStack>().CapturedCriminal;
+            HandcuffStack.GetComponent<HandcuffStack>().CapturedCriminal = null;
+            IsStartMoving = true;
+        }
+
         time += Time.deltaTime;
-        EndPosition = HandcuffStack.GetComponent<HandcuffStack>().HandcuffGlobalPosition;
+        EndPosition = HandcuffStack.GetComponent<HandcuffStack>().HandcuffsGlobalPostion(WhichCriminal);
         Vector3 pos = Vector3.Lerp(StartPosition, EndPosition, time);
         pos.y += curve.Evaluate(time);
         transform.position = pos;
@@ -50,6 +59,8 @@ public class HandcuffAnimation : MonoBehaviour
         if (transform.position == EndPosition)
         {
             time = 0;
+            IsStartMoving = false;
+            WhichCriminal = null;
             this.GetComponent<HandcuffAnimation>().enabled = false;
         }
     }

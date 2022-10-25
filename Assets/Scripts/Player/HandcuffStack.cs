@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HandcuffStack : MonoBehaviour
 {
-    [Header("Handcuff Property")]
+    [Header("Handcuff Attributes")]
     [SerializeField] GameObject Handcuff; // Handcuff prefab
     [SerializeField] Transform HandcuffStackTransform; // Handcuff stacking position
     [SerializeField] HandcuffsManager HandcuffsManager;
@@ -12,13 +12,13 @@ public class HandcuffStack : MonoBehaviour
 
     [Header("Handcuff Stack Position Property")]
     [SerializeField] private float distanceBetweenTwoHandcuffs; // Stacking vertical distance between two handcuffs
-    private Vector3 NewHandcuffStackPosition; // Next handcuff's position in handcuff stack
-    public Vector3 HandcuffGlobalPosition; // Next handcuff's position in world space.
+    [HideInInspector] private Vector3 NewHandcuffStackPosition; // Next handcuff's position in handcuff stack
+    [HideInInspector] public Vector3 HandcuffGlobalPosition; // Next handcuff's position in world space.
 
-    public Vector3 NewHandcuffCriminalPosition; // Next handcuff's position in world space.
-    public GameObject CapturedCriminal;
+    [HideInInspector] public Vector3 NewHandcuffCriminalPosition; // Next handcuff's position in world space.
+    [HideInInspector] public GameObject CapturedCriminal;
 
-    public bool flag;
+    [HideInInspector] public bool flag;
     private void Awake()
     {
         // Initialize HandcuffList 
@@ -31,14 +31,6 @@ public class HandcuffStack : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if(!flag)
-            HandcuffGlobalPosition = transform.TransformPoint(NewHandcuffStackPosition);
-        else if (flag)
-
-            HandcuffGlobalPosition = CapturedCriminal.transform.GetChild(2).transform.position;
-    }
 
     // Just use when initializing HandcuffList
     public void InitialAddHandcuffToStack(int howMuchHandcuffLeft)
@@ -56,8 +48,6 @@ public class HandcuffStack : MonoBehaviour
 
     public void RemoveHandcuffToStack(GameObject criminal)
     {
-        flag = true;
-        
         GameObject temp = HandcuffList.Last.Value;
         CapturedCriminal = criminal;
         HandcuffList.RemoveLast();
@@ -74,8 +64,6 @@ public class HandcuffStack : MonoBehaviour
 
     public void AddHandcuffToStack(Vector3 spawnPoint)
     {
-        flag = false;
-
         GameObject temp = Instantiate(Handcuff) as GameObject;
 
         temp.GetComponent<HandcuffAnimation>().StartPosition = spawnPoint;
@@ -88,4 +76,13 @@ public class HandcuffStack : MonoBehaviour
 
         NewHandcuffStackPosition += new Vector3(0f, distanceBetweenTwoHandcuffs, 0f);
     }
+
+    public Vector3 HandcuffsGlobalPostion(GameObject ob)
+    {
+        if (ob == null)
+            return transform.TransformPoint(NewHandcuffStackPosition);
+        else
+            return ob.transform.GetChild(2).transform.position;
+    }
+
 }

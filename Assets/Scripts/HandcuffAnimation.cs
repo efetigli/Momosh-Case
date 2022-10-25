@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class HandcuffAnimation : MonoBehaviour
 {
-    public Vector3 EndPosition;
-    public Vector3 StartPosition;
-    public bool IsStartMoving;
+    [HideInInspector] public Vector3 StartPosition;
+    Vector3 EndPosition;
+    bool IsStartMoving;
 
-    public AnimationCurve curve;
+    AnimationCurve curve;
     float time;
-    public float curveAngle;
+    float curveAngle;
 
-    private GameObject HandcuffStack;
-    public GameObject WhichCriminal;
+    GameObject HandcuffStack;
+    GameObject WhichCriminal;
 
     void Start()
     {
         this.transform.position = StartPosition;
-        WhichCriminal = null;
 
         HandcuffStack = GameObject.Find("/Player/Body/Handcuff Stack");
 
+        #region Set Curve
         Keyframe[] ks = new Keyframe[3];
 
         ks[0] = new Keyframe(0, 0);
@@ -34,34 +34,45 @@ public class HandcuffAnimation : MonoBehaviour
         ks[2].outTangent = curveAngle;    // +5 units on the y axis for 1 unit on the x axis.
 
         curve = new AnimationCurve(ks);
+        #endregion
     }
 
     void Update()
     {
+        PreparationParaboleMovement();
         ParaboleMovement();
+        FinishParaboleMovement();
+    }
+
+    private void PreparationParaboleMovement()
+    {
+        if (IsStartMoving)
+            return;
+
+        WhichCriminal = HandcuffStack.GetComponent<HandcuffStack>().CapturedCriminal;
+        // Reset captured criminal report in HandcuffStack.
+        HandcuffStack.GetComponent<HandcuffStack>().CapturedCriminal = null;
+        IsStartMoving = true;
     }
 
     private void ParaboleMovement()
     {
-        if (!IsStartMoving)
-        {
-            WhichCriminal = HandcuffStack.GetComponent<HandcuffStack>().CapturedCriminal;
-            HandcuffStack.GetComponent<HandcuffStack>().CapturedCriminal = null;
-            IsStartMoving = true;
-        }
-
         time += Time.deltaTime;
         EndPosition = HandcuffStack.GetComponent<HandcuffStack>().HandcuffsGlobalPostion(WhichCriminal);
         Vector3 pos = Vector3.Lerp(StartPosition, EndPosition, time);
         pos.y += curve.Evaluate(time);
         transform.position = pos;
+    }
 
-        if (transform.position == EndPosition)
-        {
-            time = 0;
-            IsStartMoving = false;
-            WhichCriminal = null;
-            this.GetComponent<HandcuffAnimation>().enabled = false;
-        }
+    private void FinishParaboleMovement()
+    {
+        if (transform.position != EndPosition)
+            return;
+
+        // Reset values
+        time = 0;
+        IsStartMoving = false;
+        WhichCriminal = null;
+        this.GetComponent<HandcuffAnimation>().enabled = false;
     }
 }

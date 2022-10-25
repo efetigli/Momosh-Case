@@ -10,15 +10,14 @@ public class HandcuffStack : MonoBehaviour
     [SerializeField] HandcuffsManager HandcuffsManager;
     private LinkedList<GameObject> HandcuffList;
 
-    [Header("Handcuff Stack Position Property")]
+    [Header("Handcuff Stack Position")]
     [SerializeField] private float distanceBetweenTwoHandcuffs; // Stacking vertical distance between two handcuffs
+
     [HideInInspector] private Vector3 NewHandcuffStackPosition; // Next handcuff's position in handcuff stack
     [HideInInspector] public Vector3 HandcuffGlobalPosition; // Next handcuff's position in world space.
-
     [HideInInspector] public Vector3 NewHandcuffCriminalPosition; // Next handcuff's position in world space.
     [HideInInspector] public GameObject CapturedCriminal;
 
-    [HideInInspector] public bool flag;
     private void Awake()
     {
         // Initialize HandcuffList 
@@ -41,7 +40,7 @@ public class HandcuffStack : MonoBehaviour
         temp.transform.localRotation = Quaternion.Euler(90f, 90f, 0f);
 
         HandcuffList.AddLast(temp);
-
+        // Prevent increase NewGandcuffPosition by 1 at the end.
         if(howMuchHandcuffLeft > 1)
             NewHandcuffStackPosition += new Vector3(0f, distanceBetweenTwoHandcuffs, 0f);
     }
@@ -73,16 +72,15 @@ public class HandcuffStack : MonoBehaviour
         temp.transform.localRotation = Quaternion.Euler(90f, 90f, 0f);
 
         HandcuffList.AddLast(temp);
-
         NewHandcuffStackPosition += new Vector3(0f, distanceBetweenTwoHandcuffs, 0f);
     }
 
-    public Vector3 HandcuffsGlobalPostion(GameObject ob)
+    public Vector3 HandcuffsGlobalPostion(GameObject criminal)
     {
-        if (ob == null)
+        if (criminal == null)
             return transform.TransformPoint(NewHandcuffStackPosition);
         else
-            return ob.transform.GetChild(2).transform.position;
+            return criminal.transform.GetChild(2).transform.position; // Represents handcuff position of a criminal.
     }
 
 }

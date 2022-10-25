@@ -47,7 +47,7 @@ public class CaptureCriminalByPlayer : MonoBehaviour
 
         CriminalManager.AddLastCriminalList(ob);
         HandcuffsManager.RemoveHandcuff(1);
-        HandcuffStack.RemoveHandcuffToStack();
+        HandcuffStack.RemoveHandcuffToStack(ob);
         ob.GetComponent<FollowTarget>().captured = true;
     }
 

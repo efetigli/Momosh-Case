@@ -15,6 +15,10 @@ public class HandcuffStack : MonoBehaviour
     private Vector3 NewHandcuffStackPosition; // Next handcuff's position in handcuff stack
     public Vector3 HandcuffGlobalPosition; // Next handcuff's position in world space.
 
+    public Vector3 NewHandcuffCriminalPosition; // Next handcuff's position in world space.
+    public GameObject CapturedCriminal;
+
+    public bool flag;
     private void Awake()
     {
         // Initialize HandcuffList 
@@ -29,7 +33,11 @@ public class HandcuffStack : MonoBehaviour
 
     private void Update()
     {
-        HandcuffGlobalPosition = transform.TransformPoint(NewHandcuffStackPosition);
+        if(!flag)
+            HandcuffGlobalPosition = transform.TransformPoint(NewHandcuffStackPosition);
+        else if (flag)
+
+            HandcuffGlobalPosition = CapturedCriminal.transform.GetChild(2).transform.position;
     }
 
     // Just use when initializing HandcuffList
@@ -46,19 +54,28 @@ public class HandcuffStack : MonoBehaviour
             NewHandcuffStackPosition += new Vector3(0f, distanceBetweenTwoHandcuffs, 0f);
     }
 
-    public void RemoveHandcuffToStack()
+    public void RemoveHandcuffToStack(GameObject criminal)
     {
+        flag = true;
+        
         GameObject temp = HandcuffList.Last.Value;
-
+        CapturedCriminal = criminal;
         HandcuffList.RemoveLast();
 
-        Destroy(temp);
+        temp.GetComponent<HandcuffAnimation>().StartPosition = 
+            transform.TransformPoint(NewHandcuffStackPosition - new Vector3(0f, distanceBetweenTwoHandcuffs, 0f));
+        temp.GetComponent<HandcuffAnimation>().enabled = true;
+
+        temp.transform.parent = criminal.transform;
+        temp.transform.localRotation = Quaternion.Euler(90f, 90f, 0f);
 
         NewHandcuffStackPosition -= new Vector3(0f, distanceBetweenTwoHandcuffs, 0f);
     }
 
     public void AddHandcuffToStack(Vector3 spawnPoint)
     {
+        flag = false;
+
         GameObject temp = Instantiate(Handcuff) as GameObject;
 
         temp.GetComponent<HandcuffAnimation>().StartPosition = spawnPoint;

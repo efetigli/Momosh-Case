@@ -71,6 +71,8 @@ public class JailStation : MonoBehaviour
         HandcuffsManager.AddHandcuff(1);
         HandcuffStack.AddHandcuffToStack(this.transform.position);
 
+        Destroy(CriminalJailList.First.Value.transform.GetChild(3).gameObject);
+
         CriminalJailList.First.Value.GetComponent<FollowTarget>().TargetTransform = TruckPointTransform;
         CriminalJailList.RemoveFirst();
 

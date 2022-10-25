@@ -49,6 +49,8 @@ public class HandcuffAnimation : MonoBehaviour
         transform.position = pos;
 
         if (transform.position == EndPosition)
+        {
             this.GetComponent<HandcuffAnimation>().enabled = false;
+        }
     }
 }

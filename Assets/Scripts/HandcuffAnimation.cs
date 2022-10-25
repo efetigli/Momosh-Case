@@ -34,7 +34,6 @@ public class HandcuffAnimation : MonoBehaviour
         curve = new AnimationCurve(ks);
     }
 
-
     void Update()
     {
         ParaboleMovement();
@@ -50,6 +49,7 @@ public class HandcuffAnimation : MonoBehaviour
 
         if (transform.position == EndPosition)
         {
+            time = 0;
             this.GetComponent<HandcuffAnimation>().enabled = false;
         }
     }

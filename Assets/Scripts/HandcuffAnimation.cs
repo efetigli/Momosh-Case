@@ -10,7 +10,7 @@ public class HandcuffAnimation : MonoBehaviour
 
     AnimationCurve curve;
     float time;
-    float curveAngle;
+    [SerializeField] float curveAngle;
 
     GameObject HandcuffStack;
     GameObject WhichCriminal;

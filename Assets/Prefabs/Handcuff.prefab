@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5120449353993918588}
   - component: {fileID: 2831749579763602339}
   - component: {fileID: 7959047421165022911}
+  - component: {fileID: 7863464067564720445}
   m_Layer: 0
   m_Name: Handcuff
   m_TagString: Untagged
@@ -96,3 +97,25 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7863464067564720445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5736243223354915194}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e529d3abdd6681046afa0aa549c213b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EndPosition: {x: 0, y: 0, z: 0}
+  StartPosition: {x: 0, y: 0, z: 0}
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  curveAngle: 8
+  IsStartMoving: 0

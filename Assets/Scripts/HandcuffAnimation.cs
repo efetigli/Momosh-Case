@@ -14,6 +14,7 @@ public class HandcuffAnimation : MonoBehaviour
 
     GameObject HandcuffStack;
     GameObject WhichCriminal;
+    Vector3 HandcuffStackPosition;
 
     void Start()
     {
@@ -52,13 +53,14 @@ public class HandcuffAnimation : MonoBehaviour
         WhichCriminal = HandcuffStack.GetComponent<HandcuffStack>().CapturedCriminal;
         // Reset captured criminal report in HandcuffStack.
         HandcuffStack.GetComponent<HandcuffStack>().CapturedCriminal = null;
+        HandcuffStackPosition = HandcuffStack.GetComponent<HandcuffStack>().NewHandcuffStackPosition;
         IsStartMoving = true;
     }
 
     private void ParaboleMovement()
     {
         time += Time.deltaTime;
-        EndPosition = HandcuffStack.GetComponent<HandcuffStack>().HandcuffsGlobalPostion(WhichCriminal);
+        EndPosition = HandcuffStack.GetComponent<HandcuffStack>().HandcuffsGlobalPostion(WhichCriminal, HandcuffStackPosition);
         Vector3 pos = Vector3.Lerp(StartPosition, EndPosition, time);
         pos.y += curve.Evaluate(time);
         transform.position = pos;

@@ -13,7 +13,7 @@ public class HandcuffStack : MonoBehaviour
     [Header("Handcuff Stack Position")]
     [SerializeField] private float distanceBetweenTwoHandcuffs; // Stacking vertical distance between two handcuffs
 
-    [HideInInspector] private Vector3 NewHandcuffStackPosition; // Next handcuff's position in handcuff stack
+    [HideInInspector] public Vector3 NewHandcuffStackPosition; // Next handcuff's position in handcuff stack
     [HideInInspector] public Vector3 HandcuffGlobalPosition; // Next handcuff's position in world space.
     [HideInInspector] public Vector3 NewHandcuffCriminalPosition; // Next handcuff's position in world space.
     [HideInInspector] public GameObject CapturedCriminal;
@@ -75,10 +75,10 @@ public class HandcuffStack : MonoBehaviour
         NewHandcuffStackPosition += new Vector3(0f, distanceBetweenTwoHandcuffs, 0f);
     }
 
-    public Vector3 HandcuffsGlobalPostion(GameObject criminal)
+    public Vector3 HandcuffsGlobalPostion(GameObject criminal, Vector3 newHandcuffStackPosition)
     {
         if (criminal == null)
-            return transform.TransformPoint(NewHandcuffStackPosition);
+            return transform.TransformPoint(newHandcuffStackPosition);
         else
             return criminal.transform.GetChild(2).transform.position; // Represents handcuff position of a criminal.
     }

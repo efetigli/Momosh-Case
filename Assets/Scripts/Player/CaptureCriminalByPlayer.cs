@@ -9,6 +9,9 @@ public class CaptureCriminalByPlayer : MonoBehaviour
     private HandcuffsManager HandcuffsManager;
     [SerializeField] private HandcuffStack HandcuffStack;
 
+    [Header("Chain Criminals")]
+    [SerializeField] ChainCriminals ChainCriminals;
+
     private void Awake()
     {
         CriminalManager = this.GetComponent<CriminalManager>();
@@ -44,6 +47,12 @@ public class CaptureCriminalByPlayer : MonoBehaviour
         // If already captured criminal, then first captured criminal is going to follow tail criminal.
         else
             ob.GetComponent<FollowTarget>().TargetTransform = CriminalManager.LastCriminalList().transform;
+
+        // Create chain
+        if (CriminalManager.CountCriminalList() == 0)
+            ChainCriminals.CreateChainBetweenPlayerAndCriminal(this.gameObject, ob);
+        else
+            ChainCriminals.CreateChainBetweenCriminalAndCriminal(CriminalManager.LastCriminalList(), ob);
 
         CriminalManager.AddLastCriminalList(ob);
         HandcuffsManager.RemoveHandcuff(1);

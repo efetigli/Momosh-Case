@@ -8,6 +8,7 @@ public class JailStation : MonoBehaviour
     [SerializeField] HandcuffsManager HandcuffsManager;
     [SerializeField] CriminalManager CriminalManager;
     [SerializeField] HandcuffStack HandcuffStack;
+    [SerializeField] ChainCriminals ChainCriminals;
 
     [Header("Tracked Points")]
     [SerializeField] Transform JailLinePointTransform;
@@ -19,11 +20,15 @@ public class JailStation : MonoBehaviour
     [Header("Jail Property")]
     [SerializeField] float WaitTimeAtJail; // Time will first criminal will spend time in jail.
     [SerializeField] int maxNumberOfCriminalInJail;
+    private LinkedList<GameObject> JailChainList; // JailChainList represents in jail line criminal's chains.
 
     private void Awake()
     {
         // Initialize CriminalJailLine
         CriminalJailList = new LinkedList<GameObject>();
+
+        // Initialize JailChainList
+        JailChainList = new LinkedList<GameObject>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -43,16 +48,39 @@ public class JailStation : MonoBehaviour
             if (CriminalManager.CountCriminalList() < maxNumberOfCriminalInJail)
                 howManyCriminal = CriminalManager.CountCriminalList();
 
+            LinkedList<GameObject> tempJailChainList = new LinkedList<GameObject>();
             for(int i = 0; i < howManyCriminal; i++)
             {
                 // Add criminal to CriminalJailList and remove CriminalList.
                 CriminalJailList.AddLast(CriminalManager.FirstCriminalList());
                 CriminalManager.RemoveFirstCriminalList();
+
+                if(ChainCriminals.ChainList.Count != 0)
+                {
+                    tempJailChainList.AddLast(ChainCriminals.ChainList.First.Value);
+                    ChainCriminals.ChainList.RemoveFirst();
+                }
+            }
+            JailChainList = tempJailChainList;
+
+            // Checking, are there some criminals left following player.
+            if (CriminalManager.CountCriminalList() > 0)
+            {
+                ChainCriminals.RemoveChainBetweenPlayerAndCriminalAndCreate();
+                Destroy(JailChainList.Last.Value);
+                JailChainList.RemoveLast();
+            }
+            // Checking, are there no criminals left following player.
+            else if (CriminalManager.CountCriminalList() == 0)
+            {
+                ChainCriminals.RemoveChainBetweenPlayerAndCriminal();
             }
 
             // If there is at least one criminal left, then head of criminals follows the player.
             if (CriminalManager.CountCriminalList() != 0)
+            {
                 CriminalManager.FirstCriminalList().GetComponent<FollowTarget>().TargetTransform = PlayerTransform;
+            }
 
             // Start sending criminals from jail to truck.
             StartCoroutine(GetOnTruck());
@@ -76,6 +104,14 @@ public class JailStation : MonoBehaviour
         CriminalJailList.First.Value.GetComponent<FollowTarget>().TargetTransform = TruckPointTransform;
         CriminalJailList.RemoveFirst();
 
+        // Destroy chains when entering the truck.
+        if(JailChainList.Count != 0)
+        {
+            Destroy(JailChainList.First.Value);
+            JailChainList.RemoveFirst();
+        }
+
+        // Be sure that it is not the last criminal. If it is then not enter.
         if (CriminalJailList.Count != 0)
         {
             CriminalJailList.First.Value.GetComponent<FollowTarget>().TargetTransform = JailLinePointTransform;

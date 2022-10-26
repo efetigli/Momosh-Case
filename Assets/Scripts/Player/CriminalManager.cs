@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CriminalManager : MonoBehaviour
 {
-    LinkedList<GameObject> CriminalList; // CriminalList represents criminals, which follows player, captured by player.
+    public LinkedList<GameObject> CriminalList { get; private set; } // CriminalList represents criminals, which follows player, captured by player.
 
     private void Awake()
     {

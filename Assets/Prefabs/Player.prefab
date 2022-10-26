@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1813661274}
   - component: {fileID: 1813661275}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Handcuff Stack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,10 @@ MonoBehaviour:
   HandcuffStackTransform: {fileID: 1813661274}
   HandcuffsManager: {fileID: 272526662}
   distanceBetweenTwoHandcuffs: 0.5
-  NewHandcuffPosition: {x: 0, y: 0, z: 0}
+  NewHandcuffStackPosition: {x: 0, y: 0, z: 0}
+  HandcuffGlobalPosition: {x: 0, y: 0, z: 0}
+  NewHandcuffCriminalPosition: {x: 0, y: 0, z: 0}
+  CapturedCriminal: {fileID: 0}
 --- !u!1 &1672886489093611630
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,7 +60,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1672886489093611631}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Look At
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +92,8 @@ GameObject:
   - component: {fileID: 1672886489310185721}
   - component: {fileID: 1672886489310185668}
   - component: {fileID: 1672886489310185671}
-  m_Layer: 0
+  - component: {fileID: 1622376512}
+  m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,6 +166,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!54 &1622376512
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672886489310185720}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &1672886489352444902
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,7 +198,8 @@ GameObject:
   - component: {fileID: 272526662}
   - component: {fileID: 272526663}
   - component: {fileID: 272526664}
-  m_Layer: 0
+  - component: {fileID: 1307815243}
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -316,6 +337,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HandcuffStack: {fileID: 1813661275}
+  ChainCriminals: {fileID: 1307815243}
+--- !u!114 &1307815243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672886489352444902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9655959173ff03e4bba86597960e78f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Chain: {fileID: 1618336179395331697, guid: 5102ad6de29b14146880454beadbb852, type: 3}
+  CriminalManager: {fileID: 272526663}
 --- !u!1 &1672886489497978154
 GameObject:
   m_ObjectHideFlags: 0
@@ -327,7 +363,7 @@ GameObject:
   - component: {fileID: 1672886489497978155}
   - component: {fileID: 1672886489497978153}
   - component: {fileID: 1672886489497978152}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Arm (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -408,7 +444,7 @@ GameObject:
   - component: {fileID: 1672886490445569338}
   - component: {fileID: 1672886490445569336}
   - component: {fileID: 1672886490445569339}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}

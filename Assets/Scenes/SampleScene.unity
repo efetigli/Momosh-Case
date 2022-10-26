@@ -1092,6 +1092,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1813661275}
     - target: {fileID: 8107653125688153897, guid: 968eada1504fa8c4bb494134adbf2b40, type: 3}
+      propertyPath: ChainCriminals
+      value: 
+      objectReference: {fileID: 1307815243}
+    - target: {fileID: 8107653125688153897, guid: 968eada1504fa8c4bb494134adbf2b40, type: 3}
       propertyPath: CriminalManager
       value: 
       objectReference: {fileID: 272526663}
@@ -1835,6 +1839,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f0ddbaaa5617f1459aefb4848fb50fc, type: 3}
+--- !u!114 &1307815243 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1307815243, guid: 1e10c654eb3179b47a69f8ec843719a6, type: 3}
+  m_PrefabInstance: {fileID: 1672886489083115174}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9655959173ff03e4bba86597960e78f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1344060877
 GameObject:
   m_ObjectHideFlags: 0
@@ -3150,7 +3165,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7795783179645311716, guid: 0f0ddbaaa5617f1459aefb4848fb50fc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1
+      value: 3.519
       objectReference: {fileID: 0}
     - target: {fileID: 7795783179645311716, guid: 0f0ddbaaa5617f1459aefb4848fb50fc, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3158,7 +3173,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7795783179645311716, guid: 0f0ddbaaa5617f1459aefb4848fb50fc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.81
+      value: 0.127
       objectReference: {fileID: 0}
     - target: {fileID: 7795783179645311716, guid: 0f0ddbaaa5617f1459aefb4848fb50fc, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3292,7 +3307,7 @@ RectTransform:
   m_Children:
   - {fileID: 662441694}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3661,7 +3676,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1672886489352444900, guid: 1e10c654eb3179b47a69f8ec843719a6, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1672886489352444900, guid: 1e10c654eb3179b47a69f8ec843719a6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3782,6 +3797,10 @@ PrefabInstance:
       propertyPath: HandcuffStack
       value: 
       objectReference: {fileID: 1813661275}
+    - target: {fileID: 8107653125688153897, guid: 968eada1504fa8c4bb494134adbf2b40, type: 3}
+      propertyPath: ChainCriminals
+      value: 
+      objectReference: {fileID: 1307815243}
     - target: {fileID: 8107653125688153897, guid: 968eada1504fa8c4bb494134adbf2b40, type: 3}
       propertyPath: CriminalManager
       value: 
